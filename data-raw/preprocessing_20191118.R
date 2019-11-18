@@ -21,7 +21,7 @@ for (db in DB) {
   assign(db, fread(cmd = paste("unxz -cq", f0),
                    sep = "|", encoding = "Latin-1"))
   f1 <- file.path(Dir1, paste0(db, ".rda"))
-  save(list = db, file = f1, compress = "xz")
+  save(list = db, file = f1, version = 2, compress = "xz")
   rm(list = db)
 }
 rm(Dir0, Dir1, Files, DB, db, f0, f1)
