@@ -8,13 +8,11 @@ rm(pkg, pkgs, npkgs)
 # DT threads
 setDTthreads(0)
 
-# Determine the number of cores and the extraction command according to the OS
+# Determine the number of cores according to the OS
 if (Sys.info()[["sysname"]] == "Linux") {
   ncores <- detectCores()
-  xcmd <- "unxz -cq"
 } else if (Sys.info()[["sysname"]] == "Windows") {
   ncores <- 1
-  xcmd <- "7z x -so"
 } else {
   stop()
 }
@@ -26,18 +24,17 @@ setwd(wd)
 rm(wd)
 
 # raw data directory
-Dir <- "data-raw/PNR74_extractions_donnees_structurees_20190910"
+Dir <- "data/PNR74_extractions_donnees_structurees_20190910"
 if(!file.exists(Dir)) Dir <- tk_choose.dir(caption = "Select data directory")
 
 # Load databases
 for (db in c("chop", "cim10", "ofs")) {
-  f0 <- paste0("pnr74_", db, "_result_filtered.csv.xz")
+  f0 <- paste0(db, ".rda")
   f <- file.path(getwd(), Dir, f0)
   if(!file.exists(f)) stop(paste("cannot find", f0, "in data directory"))
-  assign(db, fread(cmd = paste(xcmd, f),
-                   sep = "|", encoding = "Latin-1"))
+  load(f)
 }
-rm(xcmd, Dir, db, f0, f)
+rm(Dir, db, f0, f)
 
 # Read codes from the xlsx file
 # sheets: list containing each sheet of the Excel file
