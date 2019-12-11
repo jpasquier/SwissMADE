@@ -8,7 +8,7 @@ setDTthreads(0)
 setwd("~/Projects/SwissMADE")
 
 # Raw data directory
-Dir0 <- "data-raw/PNR74_extractions_donnees_structurees_20190910"
+Dir0 <- "data-raw/PNR74_extractions_donnees_structurees_20191112"
 
 # Data directory
 Dir1 <- sub("data-raw", "data", Dir0)
