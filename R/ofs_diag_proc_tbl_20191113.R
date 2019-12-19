@@ -1,4 +1,4 @@
-# Librairies
+# Libraries
 library(data.table)
 library(parallel)
 library(magrittr)

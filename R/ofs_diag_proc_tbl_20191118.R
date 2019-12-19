@@ -1,4 +1,4 @@
-# Librairies
+# Libraries
 pkgs <- c("tcltk", "data.table", "parallel", "magrittr", "readxl", "writexl")
 npkgs <- pkgs[!(pkgs %in% installed.packages()[, "Package"])]
 if(length(npkgs)) install.packages(npkgs)
