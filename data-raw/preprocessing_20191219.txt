@@ -1,0 +1,608 @@
+Duplicated lines are removed
+============================
+
+chop: no duplicate
+cim10: no duplicate
+molis: 95 duplicates were removed
+molis_smoker: no duplicate
+mouvement: no duplicate
+ofs: no duplicate
+predimed: no duplicate
+soarian_frcv: no duplicate
+soarian_med: no duplicate
+soarian: 2160 duplicates were removed
+soarian_sg_occ: no duplicate
+
+Pseudo duplicates
+=================
+
+molis case 1
+------------
+ p_IPP 83984 sej_NUMERO_SEJOUR 316027846 molis_NUMERO_BON 1011341540
+ molis_CODE_TEST_MOLIS 'PREL':
+ Two observations which only differs on molis_RESULTAT_TEXTE
+ First observation: 'URINE PAR SONDE A DEMEURE (URISWAB)'
+ Second observation: 'URINE PAR SONDE A DEMEURE'
+ Only the first observation is kept
+
+molis case 2
+------------
+ p_IPP 509780 sej_NUMERO_SEJOUR 315051498 molis_NUMERO_BON 3517596455
+ molis_CODE_TEST_MOLIS 'PTT':
+ Two observations which only differs on molis_DATE_PRELEVEMENT
+ First observation: '12.07.2015 00:00:00'
+ Second observation: '12.07.2015 12:30:00'
+ Only the second observation is kept
+
+molis case 3
+------------
+ p_IPP 943592 sej_NUMERO_SEJOUR 316066019 molis_NUMERO_BON 316066019 
+ molis_DATE_RECEPTION == '23.07.2016 21:19:40':
+ This is the only case for which codes are duplicated for the same
+ return date (molis_DATE_RECEPTION). Half of the tests involve a venous
+ line and the other half an arterial line. We add a second to the return
+ date of the venous line tests to distinguish them from the arterial
+ line and not to add a new identifying variable for this unique case.
+
+predimed
+--------
+ p_IPP 3000320 sej_NUMERO_SEJOUR 509780 medication_ID_PRESCR 368192:
+ Two observations which only differs on
+ medication_Durée effective du soluté and
+ medication_Volume effectif du soluté
+ First observation: '24 h' / 4000
+ Second observation: '0 h' / 0
+ Only the first observation is kept
+
+soarian_med
+-----------
+ For some observations, there are several lines for the same
+ administration date. We can distinguish two cases:
+   1) The lines differ on the variables medication_DOSE_ADMIN and
+      medication_DOSE_ADMIN_UNITE and possibly on the variables
+      medication_DOSE_CONVERSION, medication_DOSE_PRESCRITE,
+      medication_FREQUENCE and medication_VOLUME_PRESCRIT. In these
+      cases, there is exactly one line for which the variables
+      medication_DOSE_ADMIN and medication_DOSE_ADMIN_UNITE are
+      filled. For each case, only this line is kept, the others
+      are deleted.
+   2) The lines differ on the variables medication_DOSE_CONVERSION,
+      medication_DOSE_PRESCRITE and medication_VOLUME_PRESCRIT. In
+      these cases medication_DOSE_ADMIN and medication_DOSE_ADMIN_UNITE
+      are empty and only the first line is kept. The choice of the
+      first line is arbitrary.
+Number of duplicated observations: 870
+Number of removed duplicates: 1627
+
+Type casting
+============
+
+chop
+----
+                            variable original_type new_type
+                chop_CODE_LATERALITE       numeric  integer
+     chop_DATE_CREATION_INTERVENTION     character  POSIXct
+        chop_DATE_CREATION_PROCEDURE     character  POSIXct
+              chop_DATE_ENTREE_SALLE     character  POSIXct
+ chop_DATE_MODIFICATION_INTERVENTION     character  POSIXct
+    chop_DATE_MODIFICATION_PROCEDURE     character  POSIXct
+                   p_DATE_DECES_CHUV     character  POSIXct
+                    p_DATE_NAISSANCE     character     Date
+                        p_DOD_RFPERS     character  POSIXct
+                               p_IPP       numeric  integer
+    sej_CODE_CLASSIFICATION_MEDICALE       numeric  integer
+              sej_DATE_ENTREE_SEJOUR     character  POSIXct
+              sej_DATE_SORTIE_SEJOUR     character  POSIXct
+                   sej_NUMERO_SEJOUR       numeric  integer
+              sej_NUMERO_SEJOUR_JOIN       numeric  integer
+                sej_NUMERO_SEJOUR_UF       numeric  integer
+             sej_NUMERO_SUPER_SEJOUR       numeric  integer
+
+cim10
+-----
+                         variable original_type new_type
+      cim10_CODE_LATERALITE_CIM10       numeric  integer
+              cim10_CREATED_ON_DT     character  POSIXct
+                p_DATE_DECES_CHUV     character  POSIXct
+                 p_DATE_NAISSANCE     character     Date
+                     p_DOD_RFPERS     character  POSIXct
+                            p_IPP       numeric  integer
+ sej_CODE_CLASSIFICATION_MEDICALE       numeric  integer
+           sej_DATE_ENTREE_SEJOUR     character  POSIXct
+           sej_DATE_SORTIE_SEJOUR     character  POSIXct
+                sej_NUMERO_SEJOUR       numeric  integer
+           sej_NUMERO_SEJOUR_JOIN       numeric  integer
+             sej_NUMERO_SEJOUR_UF       numeric  integer
+          sej_NUMERO_SUPER_SEJOUR       numeric  integer
+
+molis
+-----
+                         variable original_type new_type
+               molis_DATE_ANALYSE     character  POSIXct
+           molis_DATE_PRELEVEMENT     character  POSIXct
+             molis_DATE_RECEPTION     character  POSIXct
+                p_DATE_DECES_CHUV     character  POSIXct
+                 p_DATE_NAISSANCE     character     Date
+                     p_DOD_RFPERS     character  POSIXct
+                            p_IPP       numeric  integer
+ sej_CODE_CLASSIFICATION_MEDICALE       numeric  integer
+           sej_DATE_ENTREE_SEJOUR     character  POSIXct
+           sej_DATE_SORTIE_SEJOUR     character  POSIXct
+                sej_NUMERO_SEJOUR       numeric  integer
+           sej_NUMERO_SEJOUR_JOIN       numeric  integer
+             sej_NUMERO_SEJOUR_UF       numeric  integer
+          sej_NUMERO_SUPER_SEJOUR       numeric  integer
+
+molis_smoker
+------------
+                         variable original_type  new_type
+        molis_smoker_DATE_ANALYSE     character   POSIXct
+    molis_smoker_DATE_PRELEVEMENT     character   POSIXct
+      molis_smoker_DATE_RECEPTION     character   POSIXct
+          molis_smoker_NUMERO_BON       numeric integer64
+  molis_smoker_RESULTAT_NUMERIQUE       numeric   integer
+                p_DATE_DECES_CHUV     character   POSIXct
+                 p_DATE_NAISSANCE     character      Date
+                     p_DOD_RFPERS     character   POSIXct
+                            p_IPP       numeric   integer
+ sej_CODE_CLASSIFICATION_MEDICALE       numeric   integer
+           sej_DATE_ENTREE_SEJOUR     character   POSIXct
+           sej_DATE_SORTIE_SEJOUR     character   POSIXct
+                sej_NUMERO_SEJOUR       numeric   integer
+             sej_NUMERO_SEJOUR_UF       numeric   integer
+
+mouvement
+---------
+                         variable original_type new_type
+         mvt_DATE_DEBUT_MOUVEMENT     character  POSIXct
+           mvt_DATE_FIN_MOUVEMENT     character  POSIXct
+                p_DATE_DECES_CHUV     character  POSIXct
+                 p_DATE_NAISSANCE     character     Date
+                     p_DOD_RFPERS     character  POSIXct
+                            p_IPP       numeric  integer
+ sej_CODE_CLASSIFICATION_MEDICALE       numeric  integer
+           sej_DATE_ENTREE_SEJOUR     character  POSIXct
+           sej_DATE_SORTIE_SEJOUR     character  POSIXct
+                sej_NUMERO_SEJOUR       numeric  integer
+           sej_NUMERO_SEJOUR_JOIN       numeric  integer
+             sej_NUMERO_SEJOUR_UF       numeric  integer
+          sej_NUMERO_SUPER_SEJOUR       numeric  integer
+
+ofs
+---
+                                  variable original_type  new_type
+            ofs_102_4.2V341_Lateralite_D32       numeric   integer
+            ofs_105_4.2V351_Lateralite_D33       numeric   integer
+            ofs_108_4.2V361_Lateralite_D34       numeric   integer
+     ofs_10_0.3.V04_Questionnaire cantonal       numeric   integer
+            ofs_111_4.2V371_Lateralite_D35       numeric   integer
+            ofs_114_4.2V381_Lateralite_D36       numeric   integer
+            ofs_117_4.2V391_Lateralite_D37       numeric   integer
+                       ofs_11_1.1.V01_Sexe       numeric   integer
+            ofs_123_4.2V411_Lateralite_D39       numeric   integer
+            ofs_126_4.2V421_Lateralite_D40       numeric   integer
+            ofs_129_4.2V431_Lateralite_D41       numeric   integer
+             ofs_12_1.1.V02_Date naissance       numeric   integer
+             ofs_12_4.2.V041_Lateralite_D2       numeric   integer
+            ofs_132_4.2V441_Lateralite_D42       numeric   integer
+            ofs_135_4.2V451_Lateralite_D43       numeric   integer
+            ofs_138_4.2V461_Lateralite_D44       numeric   integer
+                        ofs_13_1.1.V03_Age       numeric   integer
+            ofs_141_4.2V471_Lateralite_D45       numeric   integer
+            ofs_144_4.2V481_Lateralite_D46       numeric   integer
+            ofs_147_4.2V491_Lateralite_D47       numeric   integer
+            ofs_150_4.2V501_Lateralite_D48       numeric   integer
+            ofs_153_4.2V511_Lateralite_D49       numeric   integer
+            ofs_156_4.3.V011_Lateralite_TP       numeric   integer
+              ofs_157_4.3.V015_Date_TTT_TP       numeric   integer
+           ofs_158_4.3.V016_TTT_AMB_E-M_TP       numeric   integer
+             ofs_15_4.2.V051_Lateralite_D3       numeric   integer
+            ofs_161_4.3.V021_Lateralite_T1       numeric   integer
+              ofs_162_4.3.V025_Date_TTT_T1       numeric   integer
+           ofs_163_4.3.V026_TTT_AMB_E-M_T1       numeric   integer
+            ofs_166_4.3.V031_Lateralite_T2       numeric   integer
+              ofs_167_4.3.V035_Date_TTT_T2       numeric   integer
+           ofs_168_4.3.V036_TTT_AMB_E-M_T2       numeric   integer
+            ofs_171_4.3.V041_Lateralite_T3       numeric   integer
+              ofs_172_4.3.V045_Date_TTT_T3       numeric   integer
+           ofs_173_4.3.V046_TTT_AMB_E-M_T3       numeric   integer
+            ofs_176_4.3.V051_Lateralite_T4       numeric   integer
+              ofs_177_4.3.V055_Date_TTT_T4       numeric   integer
+           ofs_178_4.3.V056_TTT_AMB_E-M_T4       numeric   integer
+     ofs_17_1.2.V02_Séjour avant admission       numeric   integer
+            ofs_181_4.3.V061_Lateralite_T5       numeric   integer
+              ofs_182_4.3.V065_Date_TTT_T5       numeric   integer
+           ofs_183_4.3.V066_TTT_AMB_E-M_T5       numeric   integer
+            ofs_186_4.3.V071_Lateralite_T6       numeric   integer
+              ofs_187_4.3.V075_Date_TTT_T6       numeric   integer
+           ofs_188_4.3.V076_TTT_AMB_E-M_T6       numeric   integer
+             ofs_18_1.2.V03_Mode admission       numeric   integer
+              ofs_18_4.2V061_Lateralite_D4       numeric   integer
+            ofs_191_4.3.V081_Lateralite_T7       numeric   integer
+              ofs_192_4.3.V085_Date_TTT_T7       numeric   integer
+            ofs_196_4.3.V091_Lateralite_T8       numeric   integer
+              ofs_197_4.3.V095_Date_TTT_T8       numeric   integer
+             ofs_19_1.2.V04_Décision envoi       numeric   integer
+            ofs_201_4.3.V101_Lateralite_T9       numeric   integer
+              ofs_202_4.3.V105_Date_TTT_T9       numeric   integer
+           ofs_206_4.3.V111_Lateralite_T10       numeric   integer
+             ofs_207_4.3.V115_Date_TTT_T10       numeric   integer
+           ofs_20_1.3.V01_Type prise en ch       numeric   integer
+           ofs_211_4.3.V121_Lateralite_T11       numeric   integer
+             ofs_212_4.3.V125_Date_TTT_T11       numeric   integer
+          ofs_213_4.3.V126_TTT_AMB_E-M_T11       numeric   integer
+           ofs_216_4.3.V131_Lateralite_T12       numeric   integer
+             ofs_217_4.3.V135_Date_TTT_T12       numeric   integer
+          ofs_218_4.3.V136_TTT_AMB_E-M_T12       numeric   integer
+                        ofs_21_1.3.V02_GPA       numeric   integer
+              ofs_21_4.2V071_Lateralite_D5       numeric   integer
+           ofs_221_4.3.V141_Lateralite_T13       numeric   integer
+             ofs_222_4.3.V145_Date_TTT_T13       numeric   integer
+          ofs_223_4.3.V146_TTT_AMB_E-M_T13       numeric   integer
+           ofs_226_4.3.V151_Lateralite_T14       numeric   integer
+             ofs_227_4.3.V155_Date_TTT_T14       numeric   integer
+          ofs_228_4.3.V156_TTT_AMB_E-M_T14       numeric   integer
+                         ofs_22_1.3.V03_SI       numeric   integer
+           ofs_231_4.3.V161_Lateralite_T15       numeric   integer
+             ofs_232_4.3.V165_Date_TTT_T15       numeric   integer
+          ofs_233_4.3.V166_TTT_AMB_E-M_T15       numeric   integer
+           ofs_236_4.3.V171_Lateralite_T16       numeric   integer
+             ofs_237_4.3.V175_Date_TTT_T16       numeric   integer
+          ofs_238_4.3.V176_TTT_AMB_E-M_T16       numeric   integer
+                   ofs_23_1.3.V04_Vacances       numeric   integer
+           ofs_241_4.3.V181_Lateralite_T17       numeric   integer
+             ofs_242_4.3.V185_Date_TTT_T17       numeric   integer
+          ofs_243_4.3.V186_TTT_AMB_E-M_T17       numeric   integer
+           ofs_246_4.3.V191_Lateralite_T18       numeric   integer
+             ofs_247_4.3.V195_Date_TTT_T18       numeric   integer
+              ofs_24_4.2V081_Lateralite_D6       numeric   integer
+           ofs_251_4.3.V201_Lateralite_T19       numeric   integer
+             ofs_252_4.3.V205_Date_TTT_T19       numeric   integer
+           ofs_256_4.3.V211_Lateralite_T20       numeric   integer
+             ofs_257_4.3.V215_Date_TTT_T20       numeric   integer
+                ofs_25_1.4.V02_Prise en ch       numeric   integer
+           ofs_261_4.3.V221_Lateralite_T21       numeric   integer
+             ofs_262_4.3.V225_Date_TTT_T21       numeric   integer
+           ofs_266_4.3.V231_Lateralite_T22       numeric   integer
+             ofs_267_4.3.V235_Date_TTT_T22       numeric   integer
+                ofs_26_1.5.V01_Date sortie       numeric   integer
+           ofs_271_4.3.V241_Lateralite_T23       numeric   integer
+             ofs_272_4.3.V245_Date_TTT_T23       numeric   integer
+           ofs_276_4.3.V251_Lateralite_T24       numeric   integer
+             ofs_277_4.3.V255_Date_TTT_T24       numeric   integer
+            ofs_27_1.5.V02_Décision sortie       numeric   integer
+              ofs_27_4.2V091_Lateralite_D7       numeric   integer
+           ofs_281_4.3.V261_Lateralite_T25       numeric   integer
+             ofs_282_4.3.V265_Date_TTT_T25       numeric   integer
+           ofs_286_4.3.V271_Lateralite_T26       numeric   integer
+             ofs_287_4.3.V275_Date_TTT_T26       numeric   integer
+        ofs_28_1.5.V03_Séjour après sortie       numeric   integer
+           ofs_291_4.3.V281_Lateralite_T27       numeric   integer
+             ofs_292_4.3.V285_Date_TTT_T27       numeric   integer
+           ofs_296_4.3.V291_Lateralite_T28       numeric   integer
+             ofs_297_4.3.V295_Date_TTT_T28       numeric   integer
+         ofs_29_1.5.V04_Prise en ch sortie       numeric   integer
+                         ofs_2_0.1.V02_REE       numeric   integer
+                         ofs_2_4.1.V02_NPA       numeric   integer
+           ofs_301_4.3.V301_Lateralite_T29       numeric   integer
+             ofs_302_4.3.V305_Date_TTT_T29       numeric   integer
+           ofs_306_4.3.V311_Lateralite_T30       numeric   integer
+             ofs_307_4.3.V315_Date_TTT_T30       numeric   integer
+              ofs_30_4.2V101_Lateralite_D8       numeric   integer
+           ofs_311_4.3.V321_Lateralite_T31       numeric   integer
+             ofs_312_4.3.V325_Date_TTT_T31       numeric   integer
+           ofs_316_4.3.V331_Lateralite_T32       numeric   integer
+             ofs_317_4.3.V335_Date_TTT_T32       numeric   integer
+           ofs_321_4.3.V341_Lateralite_T33       numeric   integer
+             ofs_322_4.3.V345_Date_TTT_T33       numeric   integer
+           ofs_326_4.3.V351_Lateralite_T34       numeric   integer
+             ofs_327_4.3.V355_Date_TTT_T34       numeric   integer
+           ofs_331_4.3.V361_Lateralite_T35       numeric   integer
+             ofs_332_4.3.V365_Date_TTT_T35       numeric   integer
+          ofs_333_4.3.V366_TTT_AMB_E-M_T35       numeric   integer
+           ofs_336_4.3.V371_Lateralite_T36       numeric   integer
+             ofs_337_4.3.V375_Date_TTT_T36       numeric   integer
+              ofs_33_4.2V111_Lateralite_D9       numeric   integer
+           ofs_341_4.3.V381_Lateralite_T37       numeric   integer
+             ofs_342_4.3.V385_Date_TTT_T37       numeric   integer
+           ofs_346_4.3.V391_Lateralite_T38       numeric   integer
+             ofs_347_4.3.V395_Date_TTT_T38       numeric   integer
+           ofs_351_4.3.V401_Lateralite_T39       numeric   integer
+             ofs_352_4.3.V405_Date_TTT_T39       numeric   integer
+           ofs_356_4.3.V411_Lateralite_T40       numeric   integer
+             ofs_357_4.3.V415_Date_TTT_T40       numeric   integer
+           ofs_361_4.3.V421_Lateralite_T41       numeric   integer
+             ofs_362_4.3.V425_Date_TTT_T41       numeric   integer
+             ofs_367_4.3.V435_Date_TTT_T42       numeric   integer
+             ofs_36_4.2V121_Lateralite_D10       numeric   integer
+           ofs_371_4.3.V441_Lateralite_T43       numeric   integer
+             ofs_372_4.3.V445_Date_TTT_T43       numeric   integer
+           ofs_376_4.3.V451_Lateralite_T44       numeric   integer
+             ofs_377_4.3.V455_Date_TTT_T44       numeric   integer
+             ofs_382_4.3.V465_Date_TTT_T45       numeric   integer
+           ofs_386_4.3.V471_Lateralite_T46       numeric   integer
+             ofs_387_4.3.V475_Date_TTT_T46       numeric   integer
+           ofs_391_4.3.V481_Lateralite_T47       numeric   integer
+             ofs_392_4.3.V485_Date_TTT_T47       numeric   integer
+           ofs_396_4.3.V491_Lateralite_T48       numeric   integer
+             ofs_397_4.3.V495_Date_TTT_T48       numeric   integer
+             ofs_39_4.2V131_Lateralite_D11       numeric   integer
+                        ofs_3_0.1.V03_NOGA       numeric   integer
+           ofs_401_4.3.V501_Lateralite_T49       numeric   integer
+             ofs_402_4.3.V505_Date_TTT_T49       numeric   integer
+           ofs_406_4.3.V511_Lateralite_T50       numeric   integer
+             ofs_407_4.3.V515_Date_TTT_T50       numeric   integer
+             ofs_412_4.3.V525_Date_TTT_T51       numeric   integer
+           ofs_416_4.3.V531_Lateralite_T52       numeric   integer
+             ofs_417_4.3.V535_Date_TTT_T52       numeric   integer
+                  ofs_41_1.7.V02_Date_Oper       numeric   integer
+              ofs_420_4.3.V540_53ème trait       numeric   integer
+             ofs_422_4.3.V545_Date_TTT_T53       numeric   integer
+              ofs_425_4.3.V550_54ème trait       numeric   integer
+           ofs_426_4.3.V551_Lateralite_T54       numeric   integer
+             ofs_427_4.3.V555_Date_TTT_T54       numeric   integer
+             ofs_42_4.2V141_Lateralite_D12       numeric   integer
+             ofs_432_4.3.V565_Date_TTT_T55       numeric   integer
+           ofs_436_4.3.V571_Lateralite_T56       numeric   integer
+             ofs_437_4.3.V575_Date_TTT_T56       numeric   integer
+           ofs_441_4.3.V581_Lateralite_T57       numeric   integer
+             ofs_442_4.3.V585_Date_TTT_T57       numeric   integer
+           ofs_446_4.3.V591_Lateralite_T58       numeric   integer
+             ofs_447_4.3.V595_Date_TTT_T58       numeric   integer
+           ofs_451_4.3.V601_Lateralite_T59       numeric   integer
+             ofs_452_4.3.V605_Date_TTT_T59       numeric   integer
+           ofs_456_4.3.V611_Lateralite_T60       numeric   integer
+             ofs_457_4.3.V615_Date_TTT_T60       numeric   integer
+             ofs_45_4.2V151_Lateralite_D13       numeric   integer
+           ofs_461_4.3.V621_Lateralite_T61       numeric   integer
+             ofs_462_4.3.V625_Date_TTT_T61       numeric   integer
+           ofs_466_4.3.V631_Lateralite_T62       numeric   integer
+             ofs_467_4.3.V635_Date_TTT_T62       numeric   integer
+           ofs_471_4.3.V641_Lateralite_T63       numeric   integer
+             ofs_472_4.3.V645_Date_TTT_T63       numeric   integer
+             ofs_477_4.3.V655_Date_TTT_T64       numeric   integer
+           ofs_481_4.3.V661_Lateralite_T65       numeric   integer
+             ofs_482_4.3.V665_Date_TTT_T65       numeric   integer
+             ofs_487_4.3.V675_Date_TTT_T66       numeric   integer
+             ofs_48_4.2V161_Lateralite_D14       numeric   integer
+           ofs_491_4.3.V681_Lateralite_T67       numeric   integer
+             ofs_492_4.3.V685_Date_TTT_T67       numeric   integer
+           ofs_496_4.3.V691_Lateralite_T68       numeric   integer
+             ofs_497_4.3.V695_Date_TTT_T68       numeric   integer
+             ofs_502_4.3.V705_Date_TTT_T69       numeric   integer
+           ofs_506_4.3.V711_Lateralite_T70       numeric   integer
+             ofs_507_4.3.V715_Date_TTT_T70       numeric   integer
+           ofs_511_4.3.V721_Lateralite_T71       numeric   integer
+             ofs_512_4.3.V725_Date_TTT_T71       numeric   integer
+              ofs_515_4.3.V730_72ème trait       numeric   integer
+           ofs_516_4.3.V731_Lateralite_T72       numeric   integer
+             ofs_517_4.3.V735_Date_TTT_T72       numeric   integer
+             ofs_51_4.2V171_Lateralite_D15       numeric   integer
+             ofs_522_4.3.V745_Date_TTT_T73       numeric   integer
+              ofs_525_4.3.V750_74ème trait       numeric   integer
+             ofs_527_4.3.V755_Date_TTT_T74       numeric   integer
+             ofs_532_4.3.V765_Date_TTT_T75       numeric   integer
+              ofs_535_4.3.V770_76ème trait       numeric   integer
+             ofs_537_4.3.V775_Date_TTT_T76       numeric   integer
+              ofs_540_4.3.V780_77ème trait       numeric   integer
+           ofs_541_4.3.V781_Lateralite_T77       numeric   integer
+             ofs_542_4.3.V785_Date_TTT_T77       numeric   integer
+              ofs_545_4.3.V790_78ème trait       numeric   integer
+             ofs_547_4.3.V795_Date_TTT_T78       numeric   integer
+             ofs_54_4.2V181_Lateralite_D16       numeric   integer
+             ofs_552_4.3.V805_Date_TTT_T79       numeric   integer
+              ofs_555_4.3.V810_80ème trait       numeric   integer
+             ofs_557_4.3.V815_Date_TTT_T80       numeric   integer
+             ofs_562_4.3.V825_Date_TTT_T81       numeric   integer
+             ofs_567_4.3.V835_Date_TTT_T82       numeric   integer
+              ofs_570_4.3.V840_83ème trait       numeric   integer
+             ofs_572_4.3.V845_Date_TTT_T83       numeric   integer
+              ofs_575_4.3.V850_84ème trait       numeric   integer
+             ofs_577_4.3.V855_Date_TTT_T84       numeric   integer
+             ofs_57_4.2V191_Lateralite_D17       numeric   integer
+              ofs_580_4.3.V860_85ème trait       numeric   integer
+             ofs_582_4.3.V865_Date_TTT_T85       numeric   integer
+              ofs_585_4.3.V870_86ème trait       numeric   integer
+             ofs_587_4.3.V875_Date_TTT_T86       numeric   integer
+              ofs_590_4.3.V880_87ème trait       numeric   integer
+             ofs_592_4.3.V885_Date_TTT_T87       numeric   integer
+              ofs_595_4.3.V890_88ème trait       numeric   integer
+             ofs_597_4.3.V895_Date_TTT_T88       numeric   integer
+              ofs_5_4.2.V011_Lateralite_DP       numeric   integer
+              ofs_600_4.3.V900_89ème trait       numeric   integer
+             ofs_602_4.3.V905_Date_TTT_T89       numeric   integer
+              ofs_605_4.3.V910_90ème trait       numeric   integer
+             ofs_607_4.3.V915_Date_TTT_T90       numeric   integer
+             ofs_60_4.2V201_Lateralite_D18       numeric   integer
+             ofs_612_4.3.V925_Date_TTT_T91       numeric   integer
+             ofs_617_4.3.V935_Date_TTT_T92       numeric   integer
+             ofs_622_4.3.V945_Date_TTT_T93       numeric   integer
+              ofs_625_4.3.V950_94ème trait       numeric   integer
+             ofs_627_4.3.V955_Date_TTT_T94       numeric   integer
+              ofs_630_4.3.V960_95ème trait       numeric   integer
+             ofs_632_4.3.V965_Date_TTT_T95       numeric   integer
+              ofs_635_4.3.V970_96ème trait       numeric   integer
+             ofs_637_4.3.V975_Date_TTT_T96       numeric   integer
+             ofs_63_4.2V211_Lateralite_D19       numeric   integer
+              ofs_640_4.3.V980_97ème trait       numeric   integer
+             ofs_642_4.3.V985_Date_TTT_T97       numeric   integer
+             ofs_647_4.3.V995_Date_TTT_T98       numeric   integer
+            ofs_652_4.3.V1005_Date_TTT_T99       numeric   integer
+                    ofs_655_4.4.V01_Ventil       numeric   integer
+                      ofs_656_4.4.V02_SAPS       numeric   integer
+                      ofs_658_4.4.V04_NEMS       numeric   integer
+                ofs_659_4.4.V05_SSMII_RES1       numeric   integer
+                ofs_660_4.4.V06_SSMII_RES2       numeric   integer
+            ofs_663_4.6.V01_D060_HOSPIT_ID       numeric integer64
+             ofs_66_4.2V221_Lateralite_D20       numeric   integer
+                  ofs_677_4.8.V01_FACT DRG       numeric   integer
+             ofs_69_4.2V231_Lateralite_D21       numeric   integer
+             ofs_72_4.2V241_Lateralite_D22       numeric   integer
+             ofs_75_4.2V251_Lateralite_D23       numeric   integer
+             ofs_78_4.2V261_Lateralite_D24       numeric   integer
+            ofs_7_0.3.V01_Questionnaire NN       numeric   integer
+             ofs_81_4.2V271_Lateralite_D25       numeric   integer
+             ofs_84_4.2V281_Lateralite_D26       numeric   integer
+             ofs_87_4.2V291_Lateralite_D27       numeric   integer
+           ofs_8_0.3.V02_Questionnaire PSY       numeric   integer
+             ofs_90_4.2V301_Lateralite_D28       numeric   integer
+             ofs_93_4.2V311_Lateralite_D29       numeric   integer
+             ofs_96_4.2V321_Lateralite_D30       numeric   integer
+             ofs_99_4.2V331_Lateralite_D31       numeric   integer
+ ofs_9_0.3.V03_Questionnaire couts par cas       numeric   integer
+              ofs_9_4.2.V031_Lateralite_D1       numeric   integer
+                         p_DATE_DECES_CHUV     character   POSIXct
+                          p_DATE_NAISSANCE     character      Date
+                              p_DOD_RFPERS     character   POSIXct
+                                     p_IPP       numeric   integer
+          sej_CODE_CLASSIFICATION_MEDICALE       numeric   integer
+                    sej_DATE_ENTREE_SEJOUR     character   POSIXct
+                    sej_DATE_SORTIE_SEJOUR     character   POSIXct
+                         sej_NUMERO_SEJOUR       numeric   integer
+                    sej_NUMERO_SEJOUR_JOIN       numeric   integer
+                      sej_NUMERO_SEJOUR_UF       numeric   integer
+
+predimed
+--------
+                         variable original_type new_type
+            medication_DATE_ADMIN     character  POSIXct
+   medication_DATE_CREATION_ORDRE     character  POSIXct
+     medication_DATE_DEBUT_PRESCR     character  POSIXct
+       medication_DATE_DERN_ADMIN     character  POSIXct
+       medication_DATE_FIN_PRESCR     character  POSIXct
+           medication_DATE_PLANIF     character  POSIXct
+       medication_DATE_PREM_ADMIN     character  POSIXct
+      medication_ID_PRESCR_PARENT       numeric  integer
+                p_DATE_DECES_CHUV     character  POSIXct
+                 p_DATE_NAISSANCE     character     Date
+                     p_DOD_RFPERS     character  POSIXct
+                            p_IPP       numeric  integer
+ sej_CODE_CLASSIFICATION_MEDICALE       numeric  integer
+           sej_DATE_ENTREE_SEJOUR     character  POSIXct
+           sej_DATE_SORTIE_SEJOUR     character  POSIXct
+                sej_NUMERO_SEJOUR       numeric  integer
+           sej_NUMERO_SEJOUR_JOIN       numeric  integer
+             sej_NUMERO_SEJOUR_UF       numeric  integer
+          sej_NUMERO_SUPER_SEJOUR       numeric  integer
+
+soarian_frcv
+------------
+                           variable original_type new_type
+                  p_DATE_DECES_CHUV     character  POSIXct
+                   p_DATE_NAISSANCE     character     Date
+                       p_DOD_RFPERS     character  POSIXct
+                              p_IPP       numeric  integer
+   sej_CODE_CLASSIFICATION_MEDICALE       numeric  integer
+             sej_DATE_ENTREE_SEJOUR     character  POSIXct
+             sej_DATE_SORTIE_SEJOUR     character  POSIXct
+                  sej_NUMERO_SEJOUR       numeric  integer
+               sej_NUMERO_SEJOUR_UF       numeric  integer
+   soarian_frcv_Cigarettes par jour       numeric  integer
+          soarian_frcv_Date d'arrêt       numeric  integer
+ soarian_frcv_Date d'effet du form.     character  POSIXct
+
+soarian_med
+-----------
+                         variable original_type new_type
+                            p_IPP       numeric  integer
+                sej_NUMERO_SEJOUR       numeric  integer
+           medication_DATE_PLANIF     character  POSIXct
+            medication_DATE_ADMIN     character  POSIXct
+   medication_DATE_CREATION_ORDRE     character  POSIXct
+     medication_DATE_DEBUT_PRESCR     character  POSIXct
+       medication_DATE_DERN_ADMIN     character  POSIXct
+       medication_DATE_FIN_PRESCR     character  POSIXct
+       medication_DATE_PREM_ADMIN     character  POSIXct
+                p_DATE_DECES_CHUV     character  POSIXct
+                 p_DATE_NAISSANCE     character     Date
+                     p_DOD_RFPERS     character  POSIXct
+ sej_CODE_CLASSIFICATION_MEDICALE       numeric  integer
+           sej_DATE_ENTREE_SEJOUR     character  POSIXct
+           sej_DATE_SORTIE_SEJOUR     character  POSIXct
+           sej_NUMERO_SEJOUR_JOIN       numeric  integer
+             sej_NUMERO_SEJOUR_UF       numeric  integer
+          sej_NUMERO_SUPER_SEJOUR       numeric  integer
+
+soarian
+-------
+                         variable original_type new_type
+                p_DATE_DECES_CHUV     character  POSIXct
+                 p_DATE_NAISSANCE     character     Date
+                     p_DOD_RFPERS     character  POSIXct
+                            p_IPP       numeric  integer
+ sej_CODE_CLASSIFICATION_MEDICALE       numeric  integer
+           sej_DATE_ENTREE_SEJOUR     character  POSIXct
+           sej_DATE_SORTIE_SEJOUR     character  POSIXct
+                sej_NUMERO_SEJOUR       numeric  integer
+           sej_NUMERO_SEJOUR_JOIN       numeric  integer
+             sej_NUMERO_SEJOUR_UF       numeric  integer
+          sej_NUMERO_SUPER_SEJOUR       numeric  integer
+    soarian_Date effet formulaire     character  POSIXct
+
+soarian_sg_occ
+--------------
+                         variable original_type new_type
+                p_DATE_DECES_CHUV     character  POSIXct
+                 p_DATE_NAISSANCE     character     Date
+                     p_DOD_RFPERS     character  POSIXct
+                            p_IPP       numeric  integer
+ sej_CODE_CLASSIFICATION_MEDICALE       numeric  integer
+           sej_DATE_ENTREE_SEJOUR     character  POSIXct
+           sej_DATE_SORTIE_SEJOUR     character  POSIXct
+                sej_NUMERO_SEJOUR       numeric  integer
+           sej_NUMERO_SEJOUR_JOIN       numeric  integer
+             sej_NUMERO_SEJOUR_UF       numeric  integer
+          sej_NUMERO_SUPER_SEJOUR       numeric  integer
+    soa_sg_occ_ASSMT_LASTCNGDTIME     character  POSIXct
+      soa_sg_occ_FND_LASTCNGDTIME     character  POSIXct
+
+Variable types: incompatibilities
+=================================
+
+                     variable  predimed soarian_med
+        medication_DOSE_ADMIN   numeric   character
+ medication_TYPE_PRESCRIPTION character     integer
+        medication_EN_RESERVE character     integer
+
+predimed
+--------
+
+medication_TYPE_PRESCRIPTION
+Modification de prescription       Prescription originale 
+                      579285                      1862820 
+
+medication_EN_RESERVE
+               Conditionnelle 
+       1965951         476154 
+
+soarian_med
+-----------
+
+medication_TYPE_PRESCRIPTION
+     0      2      3      4      6      7 
+353140   8146   1376   7684  48418     14 
+
+medication_EN_RESERVE
+     0      1 
+398342  20436 
+
+
+Session infos
+=============
+
+R version 3.6.2 (2019-12-12)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Debian GNU/Linux 10 (buster)
+
+Matrix products: default
+BLAS:   /usr/lib/x86_64-linux-gnu/openblas/libblas.so.3
+LAPACK: /usr/lib/x86_64-linux-gnu/libopenblasp-r0.3.5.so
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] writexl_1.2       data.table_1.12.8 nvimcom_0.9-83   
+
+loaded via a namespace (and not attached):
+[1] bit_1.1-14     compiler_3.6.2 tools_3.6.2    bit64_0.9-7    fortunes_1.5-4

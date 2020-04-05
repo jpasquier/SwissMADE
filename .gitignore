@@ -12,3 +12,5 @@ R/old\ \(première\ extraction\)/
 R/*dev.R
 R/.Rhistory
 results/
+sessionInfo_files/
+source.R
