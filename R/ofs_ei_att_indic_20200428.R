@@ -102,4 +102,4 @@ summarise_at(EI, mean, .vars = vars(starts_with("EI_"), starts_with("Event_")))
 summarise_at(EI, sum, .vars = vars(starts_with("EI_"), starts_with("Event_")))
 
 # Export indicators
-write_xlsx(EI, "results/ofs_ei_att_indic_2020.xlsx")
+write_xlsx(EI, "results/ofs_ei_att_indic_20200428.xlsx")
