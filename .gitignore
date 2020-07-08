@@ -5,12 +5,14 @@ data-raw/PNR74_extractions_donnees_structurees_20191112/
 data-raw/*dev.R
 divers/
 documents/
-heures_swissmade_466.csv
+heures_466.csv
 heures_swissmade_466.R
+notes/
 protocol/
 R/old\ \(première\ extraction\)/
 R/*dev.R
 R/.Rhistory
+références/
 results/
 sessionInfo_files/
 source.R
