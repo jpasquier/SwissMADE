@@ -11,6 +11,7 @@ notes/
 protocol/
 R/old\ \(première\ extraction\)/
 R/*dev.R
+R/dev*.R
 R/.Rhistory
 références/
 results/
