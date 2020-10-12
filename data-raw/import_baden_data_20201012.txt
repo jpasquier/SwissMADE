@@ -1,0 +1,3 @@
+docker pull postgres:12.3-alpine
+docker run --name baden -e POSTGRES_PASSWORD=<password> -p 5432:5432 -d postgres:12.3-alpine
+cat dump_15-07-2020_14_56_08.sql | docker exec -i baden psql -U postgres
